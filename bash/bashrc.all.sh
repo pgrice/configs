@@ -1,9 +1,6 @@
 export SVN_EDITOR=/usr/bin/vim.gtk
 set -o vi
 
-#BNR Aliases
-function bnr_grep { grep ${2--ir} --color "$1" ~/bnr_robot_software/src/ --exclude-dir="bnr_locations" $*; }
-
 # Linting helper functions
 function cf {
     clang-format-3.9 -style=file "$1" > /tmp/clang-format-"$1"
@@ -11,8 +8,17 @@ function cf {
     rm /tmp/clang-format-"$1"
     }
 
-alias pylint="echo 'pylint --rcfile=$BNR_ROOT/src/bnr_autonomy/pylintrc' && 
-              pylint --rcfile='$BNR_ROOT/src/bnr_autonomy/pylintrc'"
+function cf80 {
+    clang-format-3.9 -style='{Language: Cpp, BasedOnStyle: Google, ColumnLimit: 80}' "$1" > /tmp/clang-format-"$1"
+    vimdiff "$1" /tmp/clang-format-"$1"
+    rm /tmp/clang-format-"$1"
+    }
+
+function cf120 {
+    clang-format-3.9 -style='{Language: Cpp, BasedOnStyle: Google, ColumnLimit: 120}' "$1" > /tmp/clang-format-"$1"
+    vimdiff "$1" /tmp/clang-format-"$1"
+    rm /tmp/clang-format-"$1"
+    }
 
 # General Aliases
 alias v='vim'
@@ -30,15 +36,29 @@ alias rmpyc='rm -vf *.pyc; rm -vf `find . -name *.pyc`'  # remove the pesky .pyc
 alias rmsvn='sudo find . -name ".svn" -exec rm -rf {} \;'
 alias open='gnome-open'
 
+# Bash prompt (PS1) configuration
+GIT_PROMPT_ONLY_IN_REPO=0
+GIT_PROMPT_THEME_FILE=~/pgrice_configs/bash/git-prompt-colors.sh
+GIT_PROMPT_THEME=Custom
+source ~/git/bash-git-prompt/gitprompt.sh
+
 # Git Aliases
-alias gco='echo "git checkout:" && git checkout'
+#source ~/git/git-completion.bash
+alias g='git'
+alias gch='echo "git checkout:" && git checkout'
+alias gco='echo "git commit:" && git commit'
 alias gf='echo "git fetch" && git fetch'
 alias gm='echo "git merge" && git merge'
 alias gl='echo "git log" && git log'
 alias grb='echo "git rebase -i --autosquash" && git rebase -i --autosquash'
+function worktree {
+    git branch $1
+    git worktree add ~/trees/$1 $1
+    cd ~/trees/$1
+}
 
 # Ros Aliases
-source /opt/ros/indigo/share/rosbash/rosbash
+source /opt/ros/$ROS_DISTRO/share/rosbash/rosbash
 alias rt='echo "rostopic: " && rostopic'
 alias rtl='echo "rostopic list:" && rostopic list'
 alias rtll='echo "rostopic list|less:" && rostopic list | less'
