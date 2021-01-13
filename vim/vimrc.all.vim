@@ -5,38 +5,39 @@ if empty(glob("~/.vim/autoload/plug.vim"))
 execute '!curl -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim'
 endif
 call plug#begin('~/.vim/bundle')
+Plug 'heavenshell/vim-pydocstring'
 Plug 'tpope/vim-sensible'
-Plug 'https://github.com/taketwo/vim-ros'
 Plug 'git@github.com:w0rp/ale.git'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
 Plug 'kien/ctrlp.vim'
 Plug 'scrooloose/syntastic'
-Plug 'scrooloose/nerdtree'
+Plug 'rubik/vim-radon'
+"Plug 'scrooloose/nerdtree'
 Plug 'szw/vim-tags'
 Plug 'bronson/vim-toggle-wrap'
 Plug 'lokaltog/vim-easymotion'
-Plug 'vim-scripts/OmniCppComplete'
+"Plug 'vim-scripts/OmniCppComplete'
 Plug 'doxygen/doxygen'
 Plug 'vim-scripts/DoxygenToolkit.vim'
-Plug 'maksimr/vim-jsbeautify', {'for': ['javascript', 'html', 'css']}
-Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+"Plug 'maksimr/vim-jsbeautify', {'for': ['javascript', 'html', 'css']}
+"Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 Plug 'vim-scripts/bash-support.vim', {'for': 'bash'}
 call plug#end()
 
 
 " Syntastic C/C++ options
 let g:syntastic_cpp_check_header=1
-let g:syntastic_cpp_include_dirs=['.', '..', '../include','../../include', '../../../include', '$BNR_ROOT/devel/include','/usr/include/eigen3','/usr/include/pcl-1.7']
+let g:syntastic_cpp_include_dirs=['.', '..', '../include','../../include', '../../../include', '/usr/include/eigen3','/usr/include/pcl-1.7']
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -Wall'
-let g:syntastic_cpp_cpplint_exec = 'cpplint'
+let g:syntastic_cpp_cpplint_exec = 'cpplint --linelength=120'
 let g:syntastic_cpp_checkers = ['cpplint', 'clang-check', 'cppclean', 'gcc']
 
 " Syntastic Python options
-let g:syntastic_python_checkers = ['pylint', 'pyflakes', 'pep8', 'pep257']
+let g:syntastic_python_python_exec = 'python2'
+let g:syntastic_python_checkers = ['pylint', 'pyflakes', 'pep257']
 let g:syntastic_python_pyflakes_args = "--max-line-length=120"
-let g:syntastic_python_pylint_args = "--rcfile=$HOME/bnr_robot_software/src/bnr_autonomy/pylintrc"
 
 " Syntastic shared options
 let g:syntastic_quiet_messages = { 'regex': ['after other header', '#pragma once in main file', 'Missing space before ', 'in any directly #included header', 'Include the directory when naming .h', 'unapproved C++11 header', 'snake_case']}
@@ -92,7 +93,7 @@ set expandtab
 
 highlight Folded ctermbg=none ctermfg=darkgreen
 
-"au BufNewFile,BufRead *.launch set filetype=xml
+au BufNewFile,BufRead *.launch set filetype=xml
 au BufNewFile,BufRead *.html set filetype=html
 au BufNewFile,BufRead *.js set filetype=javascript
 au BufNewFile,BufRead *.problem set filetype=lisp
