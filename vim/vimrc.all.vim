@@ -5,15 +5,16 @@ if empty(glob("~/.vim/autoload/plug.vim"))
 execute '!curl -fLo ~/.vim/autoload/plug.vim https://raw.github.com/junegunn/vim-plug/master/plug.vim'
 endif
 call plug#begin('~/.vim/bundle')
-Plug 'heavenshell/vim-pydocstring'
-Plug 'tpope/vim-sensible'
-Plug 'git@github.com:w0rp/ale.git'
+"Plug 'python-mode/python-mode'
+"Plug 'davidhalter/jedi-vim'
+"Plug 'tpope/vim-sensible'
+"Plug 'git@github.com:w0rp/ale.git'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
-Plug 'kien/ctrlp.vim'
+"Plug 'kien/ctrlp.vim'
 Plug 'scrooloose/syntastic'
-Plug 'rubik/vim-radon'
+"Plug 'rubik/vim-radon'
 "Plug 'scrooloose/nerdtree'
 Plug 'szw/vim-tags'
 Plug 'bronson/vim-toggle-wrap'
@@ -27,6 +28,12 @@ Plug 'vim-scripts/bash-support.vim', {'for': 'bash'}
 call plug#end()
 
 
+" Pymode Options
+"let g:pymode_virtualenv_path=$BREWST_HOME . '/' . system("pushd $BREWST_HOME > /dev/null && poetry env info -p | tr -d '\n' && popd > /dev/null")
+"let g:pymode_options_max_line_length=100
+"let g:pymode_lint_checkers=['pylint', 'pep8', 'mccabe', 'pyflakes']
+"let g:pymode_lint_ignore = ["E0611"]
+
 " Syntastic C/C++ options
 let g:syntastic_cpp_check_header=1
 let g:syntastic_cpp_include_dirs=['.', '..', '../include','../../include', '../../../include', '/usr/include/eigen3','/usr/include/pcl-1.7']
@@ -35,14 +42,19 @@ let g:syntastic_cpp_cpplint_exec = 'cpplint --linelength=120'
 let g:syntastic_cpp_checkers = ['cpplint', 'clang-check', 'cppclean', 'gcc']
 
 " Syntastic Python options
-let g:syntastic_python_python_exec = 'python2'
-let g:syntastic_python_checkers = ['pylint', 'pyflakes', 'pep257']
-let g:syntastic_python_pyflakes_args = "--max-line-length=120"
+let g:syntastic_python_python_exec = 'python3'
+let g:syntastic_python_checkers = ['pylint', 'pyflakes']
+let g:syntastic_python_pyflakes_args = "--max-line-length=100"
 
 " Syntastic shared options
-let g:syntastic_quiet_messages = { 'regex': ['after other header', '#pragma once in main file', 'Missing space before ', 'in any directly #included header', 'Include the directory when naming .h', 'unapproved C++11 header', 'snake_case']}
+"let g:syntastic_quiet_messages = { 'regex': ['after other header', '#pragma once in main file', 'Missing space before ', 'in any directly #included header', 'Include the directory when naming .h', 'unapproved C++11 header', 'snake_case']}
+"let g:syntastic_quiet_messages = { 'regex': ['import-error']}
+let g:syntastic_aggregate_errors = 1
 let g:syntastic_enable_signs = 1
-let g:syntastic_auto_loc_list=1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
 
 " Vim-jsbeautify Plugin setup
 " apply beautify to full buffer

@@ -38,7 +38,7 @@ alias open='gnome-open'
 
 # Bash prompt (PS1) configuration
 GIT_PROMPT_ONLY_IN_REPO=0
-GIT_PROMPT_THEME_FILE=~/pgrice_configs/bash/git-prompt-colors.sh
+GIT_PROMPT_THEME_FILE=~/git/pgrice_configs/bash/git-prompt-colors.sh
 GIT_PROMPT_THEME=Custom
 source ~/git/bash-git-prompt/gitprompt.sh
 
@@ -52,30 +52,33 @@ alias gm='echo "git merge" && git merge'
 alias gl='echo "git log" && git log'
 alias grb='echo "git rebase -i --autosquash" && git rebase -i --autosquash'
 function worktree {
-    git branch $1
-    git worktree add ~/trees/$1 $1
-    cd ~/trees/$1
+    BRANCH=$1
+    WT_PATH=~/trees/$BRANCH
+    git worktree add $WT_PATH -b $BRANCH
+    cd $WT_PATH
+    echo "export BREWST_HOME=$WT_PATH" > $WT_PATH/.envrc
+    direnv allow .
 }
 
 # Ros Aliases
-source /opt/ros/$ROS_DISTRO/share/rosbash/rosbash
-alias rt='echo "rostopic: " && rostopic'
-alias rtl='echo "rostopic list:" && rostopic list'
-alias rtll='echo "rostopic list|less:" && rostopic list | less'
-alias rtlg='echo "rostopic list | grep" && rostopic list | grep'
-alias rte='echo "rostopic echo: " && rostopic echo'
-alias rte1='echo "rostopic echo -n 1: " && rostopic echo -n 1'
-alias rti='echo "rostopic info: " && rostopic info'
-alias rn='echo "rosnode: " && rosnode'
-alias rnl='echo "rosnode list: " && rosnode list'
-alias rnlg='echo "rosnode list | grep: " && rosnode list | grep'
-alias rni='echo "rosnode info: " && rosnode info'
-alias rms='echo "rosmsg show: " && rosmsg show'
-alias rviz='echo "rosrun rviz rviz " && rosrun rviz rviz'
+#source /opt/ros/$ROS_DISTRO/share/rosbash/rosbash
+#alias rt='echo "rostopic: " && rostopic'
+#alias rtl='echo "rostopic list:" && rostopic list'
+#alias rtll='echo "rostopic list|less:" && rostopic list | less'
+#alias rtlg='echo "rostopic list | grep" && rostopic list | grep'
+#alias rte='echo "rostopic echo: " && rostopic echo'
+#alias rte1='echo "rostopic echo -n 1: " && rostopic echo -n 1'
+#alias rti='echo "rostopic info: " && rostopic info'
+#alias rn='echo "rosnode: " && rosnode'
+#alias rnl='echo "rosnode list: " && rosnode list'
+#alias rnlg='echo "rosnode list | grep: " && rosnode list | grep'
+#alias rni='echo "rosnode info: " && rosnode info'
+#alias rms='echo "rosmsg show: " && rosmsg show'
+#alias rviz='echo "rosrun rviz rviz " && rosrun rviz rviz'
 
-complete -F "_roscomplete_rostopic" "rt"
-complete -F "_roscomplete_rosnode" "rn"
-
-function imv () { echo "rosrun image_view image_view image:=$1" && rosrun image_view image_view image:=$1; }
-function imvt () { echo "rosrun image_view image_view image:=$1 _image_transport:=theora" && rosrun image_view image_view image:=$1 _image_transport:=theora; }
+#complete -F "_roscomplete_rostopic" "rt"
+#complete -F "_roscomplete_rosnode" "rn"
+#
+#function imv () { echo "rosrun image_view image_view image:=$1" && rosrun image_view image_view image:=$1; }
+#function imvt () { echo "rosrun image_view image_view image:=$1 _image_transport:=theora" && rosrun image_view image_view image:=$1 _image_transport:=theora; }
 
